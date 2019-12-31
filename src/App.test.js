@@ -1,9 +1,9 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { render } from "@testing-library/react";
+import MasterForm from "./MasterForm";
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
+test("renders form component", () => {
+  const { getByText } = render(<MasterForm />);
+  const linkElement = getByText(/two step wizard/i);
   expect(linkElement).toBeInTheDocument();
 });
