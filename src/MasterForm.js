@@ -1,21 +1,65 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import Step1 from "./steps/AssetInformation";
+import Step2 from "./steps/Advanced";
 
-const useStyles = makeStyles(theme => ({
-  header: {
-    padding: theme.spacing(1)
+class MasterForm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentStep: 1,
+      step1: {
+        assetName: "",
+        assetCode: "",
+        maxIssuanceAmount: ""
+      },
+      step2: {
+        issuanceApproval: true,
+        preIssuanceAssetSignerID: null,
+        initialPreIssuedAmount: null
+      }
+    };
   }
-}));
 
-function MasterForm() {
-  const classes = useStyles();
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
 
-  return (
-    <Paper elevation={3}>
-      <h1 className={classes.header}>The two step wizard</h1>
-    </Paper>
-  );
+  handleSubmit = event => {
+    event.preventDefault();
+    const { step1, step2 } = this.state;
+    const requestBody = {
+      step1,
+      step2
+    };
+    console.log(JSON.stringify(requestBody));
+  };
+
+  render() {
+    return (
+      <React.Fragment>
+        <Paper elevation={3}>
+          <h1>The two step wizard</h1>
+        </Paper>
+        <form>
+          <Step1
+            currentStep={this.state.currentStep}
+            handleChange={this.handleChange}
+            data={this.state.step1}
+          />
+          <Step2
+            currentStep={this.state.currentStep}
+            handleChange={this.handleChange}
+            data={this.state.step2}
+          />
+        </form>
+      </React.Fragment>
+    );
+  }
 }
 
 export default MasterForm;
