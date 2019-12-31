@@ -15,18 +15,36 @@ class MasterForm extends React.Component {
         maxIssuanceAmount: ""
       },
       step2: {
-        issuanceApproval: true,
-        preIssuanceAssetSignerID: null,
-        initialPreIssuedAmount: null
+        issuanceApproval: "",
+        preIssuanceAssetSignerID: "",
+        initialPreIssuedAmount: ""
       }
     };
   }
 
   handleChange = event => {
     const { name, value } = event.target;
-    this.setState({
-      [name]: value
+    const stepNumber = event.target.attributes["step"].value;
+
+    this.setState(prevState => {
+      let step = Object.assign({}, prevState[stepNumber]);
+      step[name] = value;
+      return { [stepNumber]: step };
     });
+  };
+
+  goNext = event => {
+    event.preventDefault();
+    let { currentStep } = this.state;
+    currentStep++;
+    this.setState({ currentStep });
+  };
+
+  goPrev = event => {
+    event.preventDefault();
+    let { currentStep } = this.state;
+    currentStep--;
+    this.setState({ currentStep });
   };
 
   handleSubmit = event => {
@@ -45,17 +63,20 @@ class MasterForm extends React.Component {
         <Paper elevation={3}>
           <h1>The two step wizard</h1>
         </Paper>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <Step1
             currentStep={this.state.currentStep}
+            goNext={this.goNext}
             handleChange={this.handleChange}
             data={this.state.step1}
           />
           <Step2
             currentStep={this.state.currentStep}
+            goPrev={this.goPrev}
             handleChange={this.handleChange}
             data={this.state.step2}
           />
+          {this.state.currentStep === 2 && <button>Create request</button>}
         </form>
       </React.Fragment>
     );
