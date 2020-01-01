@@ -1,7 +1,35 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper";
+import PropTypes from "prop-types";
+import HamburgerToggle from "react-hamburger-menu";
+import { withStyles } from "@material-ui/styles";
+import Grid from "@material-ui/core/Grid";
 import Step1 from "./steps/AssetInformation";
 import Step2 from "./steps/Advanced";
+import Tabs from "./Tabs";
+
+const mainColor = "#5d6191";
+const headerBackgroundColor = "#e9eaee";
+
+const styles = () => ({
+  root: {
+    background: "white",
+    minWidth: "400px",
+    color: mainColor
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "0 16px",
+    background: headerBackgroundColor
+  },
+  title: {
+    fontSize: "32px"
+  },
+  form: {
+    padding: "16px"
+  }
+});
 
 class MasterForm extends React.Component {
   constructor(props) {
@@ -18,7 +46,8 @@ class MasterForm extends React.Component {
         issuanceApproval: "",
         preIssuanceAssetSignerID: "",
         initialPreIssuedAmount: ""
-      }
+      },
+      open: true
     };
   }
 
@@ -30,6 +59,16 @@ class MasterForm extends React.Component {
       let step = Object.assign({}, prevState[stepNumber]);
       step[name] = value;
       return { [stepNumber]: step };
+    });
+  };
+
+  handleChangeCurrentStepByTabs = currentStep => {
+    this.setState({ currentStep });
+  };
+
+  handleClick = () => {
+    this.setState({
+      open: !this.state.open
     });
   };
 
@@ -58,29 +97,52 @@ class MasterForm extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <React.Fragment>
-        <Paper elevation={3}>
-          <h1>The two step wizard</h1>
-        </Paper>
-        <form onSubmit={this.handleSubmit}>
-          <Step1
+        <Grid className={classes.root} container direction="column" spacing={2}>
+          <header className={classes.header}>
+            <h1 className={classes.title}>Create asset</h1>
+            <HamburgerToggle
+              isOpen={this.state.open}
+              menuClicked={this.handleClick}
+              width={30}
+              height={24}
+              color={mainColor}
+              animationDuration={0.5}
+            />
+          </header>
+          <Tabs
             currentStep={this.state.currentStep}
-            goNext={this.goNext}
-            handleChange={this.handleChange}
-            data={this.state.step1}
+            handleChangeCurrentStepByTabs={this.handleChangeCurrentStepByTabs}
           />
-          <Step2
-            currentStep={this.state.currentStep}
-            goPrev={this.goPrev}
-            handleChange={this.handleChange}
-            data={this.state.step2}
-          />
-          {this.state.currentStep === 2 && <button>Create request</button>}
-        </form>
+          <form
+            className={classes.form}
+            onSubmit={this.handleSubmit}
+            style={!this.state.open ? { display: "none" } : {}}
+          >
+            <Step1
+              currentStep={this.state.currentStep}
+              goNext={this.goNext}
+              handleChange={this.handleChange}
+              data={this.state.step1}
+            />
+            <Step2
+              currentStep={this.state.currentStep}
+              goPrev={this.goPrev}
+              handleChange={this.handleChange}
+              data={this.state.step2}
+            />
+            {this.state.currentStep === 2 && <button>Create request</button>}
+          </form>
+        </Grid>
       </React.Fragment>
     );
   }
 }
 
-export default MasterForm;
+MasterForm.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(MasterForm);
