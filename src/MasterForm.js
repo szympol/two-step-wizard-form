@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import HamburgerToggle from "react-hamburger-menu";
 import { withStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import { ValidatorForm } from "react-material-ui-form-validator";
+
 import Step1 from "./steps/AssetInformation";
 import Step2 from "./steps/Advanced";
 import Tabs from "./Tabs";
@@ -13,7 +16,8 @@ const headerBackgroundColor = "#e9eaee";
 const styles = () => ({
   root: {
     background: "white",
-    minWidth: "400px",
+    minWidth: "320px",
+    maxWidth: "600px",
     color: mainColor
   },
   header: {
@@ -27,7 +31,10 @@ const styles = () => ({
     fontSize: "32px"
   },
   form: {
-    padding: "16px"
+    padding: "16px",
+    "& > .MuiFormControl-root": {
+      marginBottom: "10px"
+    }
   }
 });
 
@@ -40,7 +47,10 @@ class MasterForm extends React.Component {
       step1: {
         assetName: "",
         assetCode: "",
-        maxIssuanceAmount: ""
+        maxIssuanceAmount: "",
+        assetType: "",
+        transferable: false,
+        withdrawable: false
       },
       step2: {
         issuanceApproval: "",
@@ -53,7 +63,14 @@ class MasterForm extends React.Component {
 
   handleChange = event => {
     const { name, value } = event.target;
-    const stepNumber = event.target.attributes["step"].value;
+
+    const stepNumber =
+      name === "assetName" ||
+      name === "assetCode" ||
+      name === "maxIssuanceAmount" ||
+      name === "assetType"
+        ? "step1"
+        : "step2";
 
     this.setState(prevState => {
       let step = Object.assign({}, prevState[stepNumber]);
@@ -62,8 +79,32 @@ class MasterForm extends React.Component {
     });
   };
 
+  handleChangeEmail = event => {
+    const email = event.target.value;
+    this.setState({ email });
+  };
+
   handleChangeCurrentStepByTabs = currentStep => {
     this.setState({ currentStep });
+  };
+
+  handleChangeCheckbox = name => event => {
+    const checked = event.target.checked;
+    this.setState(prevState => {
+      let step = Object.assign({}, prevState.step1);
+      step.transferable = false;
+      return { step1: step };
+    });
+    this.setState(prevState => {
+      let step = Object.assign({}, prevState.step1);
+      step.withdrawable = false;
+      return { step1: step };
+    });
+    this.setState(prevState => {
+      let step = Object.assign({}, prevState.step1);
+      step[name] = checked;
+      return { step1: step };
+    });
   };
 
   handleClick = () => {
@@ -112,29 +153,38 @@ class MasterForm extends React.Component {
               animationDuration={0.5}
             />
           </header>
-          <Tabs
-            currentStep={this.state.currentStep}
-            handleChangeCurrentStepByTabs={this.handleChangeCurrentStepByTabs}
-          />
-          <form
-            className={classes.form}
-            onSubmit={this.handleSubmit}
-            style={!this.state.open ? { display: "none" } : {}}
-          >
-            <Step1
+          <main style={!this.state.open ? { display: "none" } : {}}>
+            <Tabs
               currentStep={this.state.currentStep}
-              goNext={this.goNext}
-              handleChange={this.handleChange}
-              data={this.state.step1}
+              handleChangeCurrentStepByTabs={this.handleChangeCurrentStepByTabs}
             />
-            <Step2
-              currentStep={this.state.currentStep}
-              goPrev={this.goPrev}
-              handleChange={this.handleChange}
-              data={this.state.step2}
-            />
-            {this.state.currentStep === 2 && <button>Create request</button>}
-          </form>
+            <ValidatorForm
+              className={classes.form}
+              ref={r => {
+                this.form = r;
+              }}
+              onSubmit={this.handleSubmit}
+              onError={errors => console.log(errors)}
+              instantValidate
+            >
+              <Step1
+                currentStep={this.state.currentStep}
+                goNext={this.goNext}
+                handleChange={this.handleChange}
+                data={this.state.step1}
+                handleChangeCheckbox={this.handleChangeCheckbox}
+              />
+              {/* <Step2
+                currentStep={this.state.currentStep}
+                goPrev={this.goPrev}
+                handleChange={this.handleChange}
+                data={this.state.step2}
+              /> */}
+              {this.state.currentStep === 2 && (
+                <Button type="submit">Create request</Button>
+              )}
+            </ValidatorForm>
+          </main>
         </Grid>
       </React.Fragment>
     );
