@@ -8,7 +8,7 @@ import { ValidatorForm } from "react-material-ui-form-validator";
 
 import Step1 from "./steps/AssetInformation";
 import Step2 from "./steps/Advanced";
-import Tabs from "./Tabs";
+import Tabs from "./components/Tabs";
 
 const mainColor = "#5d6191";
 const headerBackgroundColor = "#e9eaee";
@@ -35,6 +35,12 @@ const styles = () => ({
     "& > .MuiFormControl-root": {
       marginBottom: "10px"
     }
+  },
+  button: {
+    display: "flex",
+    marginTop: "16px",
+    minWidth: "96px",
+    textTransform: "capitalize"
   }
 });
 
@@ -44,6 +50,8 @@ class MasterForm extends React.Component {
 
     this.state = {
       currentStep: 1,
+      validStep1: false,
+      validStep2: false,
       step1: {
         assetName: "",
         assetCode: "",
@@ -53,7 +61,7 @@ class MasterForm extends React.Component {
         withdrawable: false
       },
       step2: {
-        issuanceApproval: "",
+        issuanceDisapproval: false,
         preIssuanceAssetSignerID: "",
         initialPreIssuedAmount: ""
       },
@@ -107,10 +115,34 @@ class MasterForm extends React.Component {
     });
   };
 
+  handleChangeCheckboxStep2 = name => event => {
+    const checked = event.target.checked;
+    this.setState(prevState => {
+      let step = Object.assign({}, prevState.step2);
+      step[name] = checked;
+      return { step2: step };
+    });
+  };
+
+  getRandomSignerId = id => {
+    this.setState(prevState => {
+      let step = Object.assign({}, prevState.step2);
+      step.preIssuanceAssetSignerID = id;
+      return { step2: step };
+    });
+  };
+
   handleClick = () => {
     this.setState({
       open: !this.state.open
     });
+  };
+
+  getStateButtonStep1 = state => {
+    this.setState({ validStep1: !state });
+  };
+  getStateButtonStep2 = state => {
+    this.setState({ validStep2: !state });
   };
 
   goNext = event => {
@@ -157,14 +189,15 @@ class MasterForm extends React.Component {
             <Tabs
               currentStep={this.state.currentStep}
               handleChangeCurrentStepByTabs={this.handleChangeCurrentStepByTabs}
+              validStep1={this.state.validStep1}
             />
             <ValidatorForm
               className={classes.form}
               ref={r => {
                 this.form = r;
               }}
-              onSubmit={this.handleSubmit}
               onError={errors => console.log(errors)}
+              onSubmit={() => console.log("submitted")}
               instantValidate
             >
               <Step1
@@ -173,17 +206,29 @@ class MasterForm extends React.Component {
                 handleChange={this.handleChange}
                 data={this.state.step1}
                 handleChangeCheckbox={this.handleChangeCheckbox}
+                getStateButtonStep1={this.getStateButtonStep1}
               />
-              {/* <Step2
+              <Step2
                 currentStep={this.state.currentStep}
                 goPrev={this.goPrev}
                 handleChange={this.handleChange}
                 data={this.state.step2}
-              /> */}
-              {this.state.currentStep === 2 && (
-                <Button type="submit">Create request</Button>
-              )}
+                handleChangeCheckbox={this.handleChangeCheckboxStep2}
+                getRandomSignerId={this.getRandomSignerId}
+                getStateButtonStep2={this.getStateButtonStep2}
+              />
             </ValidatorForm>
+            {this.state.currentStep === 2 && (
+              <Button
+                className={classes.button}
+                color="primary"
+                variant="contained"
+                onClick={this.handleSubmit}
+                disabled={!this.state.validStep1 || !this.state.validStep2}
+              >
+                Create request
+              </Button>
+            )}
           </main>
         </Grid>
       </React.Fragment>

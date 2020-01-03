@@ -3,10 +3,18 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/styles";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 const styles = () => ({
   root: {
-    fontSize: "10px"
+    fontSize: "10px",
+    "& .MuiTab-wrapper": {
+      display: "flex",
+      flexDirection: "row",
+      "& .MuiSvgIcon-root": {
+        margin: "0 4px 0 0"
+      }
+    }
   }
 });
 
@@ -41,7 +49,7 @@ class StepTabs extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, validStep1 } = this.props;
     return (
       <Tabs
         value={this.state.value}
@@ -50,7 +58,16 @@ class StepTabs extends React.Component {
         onChange={this.handleChange}
         aria-label="assets tabs"
       >
-        <Tab className={classes.root} label="1. Asset information" />
+        <Tab
+          className={classes.root}
+          icon={
+            <CheckCircleIcon
+              style={!validStep1 ? { display: "none" } : {}}
+              fontSize="small"
+            />
+          }
+          label="1. Asset information"
+        ></Tab>
         <Tab className={classes.root} label="2. Advanced" />
       </Tabs>
     );

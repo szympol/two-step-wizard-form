@@ -55,6 +55,7 @@ class Step1 extends React.Component {
 
     if (JSON.stringify(prevPropsData) !== JSON.stringify(currentData)) {
       if (condition) this.setState({ disabled: false });
+      setTimeout(() => this.props.getStateButtonStep1(this.state.disabled), 0);
     }
   }
 
@@ -156,6 +157,7 @@ class Step1 extends React.Component {
             <FormControlLabel
               control={
                 <Checkbox
+                  color="primary"
                   checked={transferable}
                   onChange={this.props.handleChangeCheckbox("transferable")}
                   value="transferable"
@@ -166,6 +168,7 @@ class Step1 extends React.Component {
             <FormControlLabel
               control={
                 <Checkbox
+                  color="primary"
                   checked={withdrawable}
                   onChange={this.props.handleChangeCheckbox("withdrawable")}
                   value="withdrawable"
@@ -180,7 +183,7 @@ class Step1 extends React.Component {
         <Button
           color="primary"
           variant="contained"
-          onClick={this.state.disabled ? this.props.goNext : null}
+          onClick={this.props.goNext}
           disabled={this.state.disabled}
           className={classes.button}
         >
