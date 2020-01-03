@@ -45,17 +45,22 @@ class Step2 extends React.Component {
       preIssuanceAssetSignerIDValid,
       initialPreIssuedAmount
     } = this.state;
-    const { issuanceDisapproval } = prevProps.data;
+    let { issuanceDisapproval, ...prevPropsData } = prevProps.data;
+    let {
+      issuanceDisapproval: issuanceDisapprovalCurrentData,
+      ...currentData
+    } = this.props.data;
 
-    const prevPropsData = prevProps.data;
-    const currentData = this.props.data;
-
-    if (prevState.signerId !== signerId) {
-      this.props.getRandomSignerId(signerId);
-    }
-
-    if (issuanceDisapproval !== this.props.data.issuanceDisapproval) {
-      this.setState({ issuanceDisapprovalValid: issuanceDisapproval });
+    if (issuanceDisapproval !== issuanceDisapprovalCurrentData) {
+      if (issuanceDisapprovalCurrentData) {
+        this.setState({ disabled: true });
+      } else {
+        this.setState({ disabled: false });
+      }
+      this.setState({
+        issuanceDisapprovalValid: !issuanceDisapprovalCurrentData
+      });
+      setTimeout(() => this.props.getStateButtonStep2(!this.state.disabled), 0);
     }
 
     const condition = preIssuanceAssetSignerIDValid && initialPreIssuedAmount;
@@ -66,6 +71,10 @@ class Step2 extends React.Component {
         this.setState({ disabled: true });
       }
       setTimeout(() => this.props.getStateButtonStep2(this.state.disabled), 0);
+    }
+
+    if (prevState.signerId !== signerId) {
+      this.props.getRandomSignerId(signerId);
     }
   }
 
