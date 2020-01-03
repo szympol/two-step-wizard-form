@@ -16,8 +16,6 @@ const headerBackgroundColor = "#e9eaee";
 const styles = () => ({
   root: {
     background: "white",
-    minWidth: "320px",
-    maxWidth: "600px",
     color: mainColor
   },
   header: {

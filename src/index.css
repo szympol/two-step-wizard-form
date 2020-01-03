@@ -13,7 +13,12 @@ body {
   font-size: calc(10px + 2vmin);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+#root {
+  width: 600px;
+}
+
+@media (max-width: 599px) {
+  #root {
+    max-width: 320px;
+  }
 }
