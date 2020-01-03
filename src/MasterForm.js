@@ -67,7 +67,7 @@ class MasterForm extends React.Component {
     };
   }
 
-  handleChange = event => {
+  handleChangeOfValue = event => {
     const { name, value } = event.target;
 
     const stepNumber =
@@ -85,16 +85,11 @@ class MasterForm extends React.Component {
     });
   };
 
-  handleChangeEmail = event => {
-    const email = event.target.value;
-    this.setState({ email });
-  };
-
   handleChangeCurrentStepByTabs = currentStep => {
     this.setState({ currentStep });
   };
 
-  handleChangeCheckbox = name => event => {
+  handleChangeCheckboxStep1 = name => event => {
     const checked = event.target.checked;
     this.setState(prevState => {
       let step = Object.assign({}, prevState.step1);
@@ -130,7 +125,7 @@ class MasterForm extends React.Component {
     });
   };
 
-  handleClick = () => {
+  handleShowCloseCreateAsset = () => {
     this.setState({
       open: !this.state.open
     });
@@ -147,13 +142,6 @@ class MasterForm extends React.Component {
     event.preventDefault();
     let { currentStep } = this.state;
     currentStep++;
-    this.setState({ currentStep });
-  };
-
-  goPrev = event => {
-    event.preventDefault();
-    let { currentStep } = this.state;
-    currentStep--;
     this.setState({ currentStep });
   };
 
@@ -176,7 +164,7 @@ class MasterForm extends React.Component {
             <h1 className={classes.title}>Create asset</h1>
             <HamburgerToggle
               isOpen={this.state.open}
-              menuClicked={this.handleClick}
+              menuClicked={this.handleShowCloseCreateAsset}
               width={30}
               height={24}
               color={mainColor}
@@ -201,17 +189,17 @@ class MasterForm extends React.Component {
               <Step1
                 currentStep={this.state.currentStep}
                 goNext={this.goNext}
-                handleChange={this.handleChange}
+                handleChangeOfValue={this.handleChangeOfValue}
                 data={this.state.step1}
-                handleChangeCheckbox={this.handleChangeCheckbox}
+                handleChangeCheckboxStep1={this.handleChangeCheckboxStep1}
                 getStateButtonStep1={this.getStateButtonStep1}
               />
               <Step2
                 currentStep={this.state.currentStep}
                 goPrev={this.goPrev}
-                handleChange={this.handleChange}
+                handleChangeOfValue={this.handleChangeOfValue}
                 data={this.state.step2}
-                handleChangeCheckbox={this.handleChangeCheckboxStep2}
+                handleChangeCheckboxStep2={this.handleChangeCheckboxStep2}
                 getRandomSignerId={this.getRandomSignerId}
                 getStateButtonStep2={this.getStateButtonStep2}
               />

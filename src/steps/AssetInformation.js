@@ -89,7 +89,7 @@ class Step1 extends React.Component {
         <TextValidator
           fullWidth
           label="Asset name"
-          onChange={this.props.handleChange}
+          onChange={this.props.handleChangeOfValue}
           name="assetName"
           type="text"
           value={assetName}
@@ -100,7 +100,7 @@ class Step1 extends React.Component {
         <TextValidator
           fullWidth
           label="Asset code"
-          onChange={this.props.handleChange}
+          onChange={this.props.handleChangeOfValue}
           name="assetCode"
           type="text"
           value={assetCode}
@@ -111,7 +111,7 @@ class Step1 extends React.Component {
         <TextValidator
           fullWidth
           label="Max Issuance Amount"
-          onChange={this.props.handleChange}
+          onChange={this.props.handleChangeOfValue}
           name="maxIssuanceAmount"
           type="text"
           value={maxIssuanceAmount}
@@ -127,7 +127,7 @@ class Step1 extends React.Component {
             id="demo-simple-select-error"
             name="assetType"
             value={assetType}
-            onChange={this.props.handleChange}
+            onChange={this.props.handleChangeOfValue}
             renderValue={value => `${value}`}
           >
             <MenuItem value="">
@@ -159,7 +159,9 @@ class Step1 extends React.Component {
                 <Checkbox
                   color="primary"
                   checked={transferable}
-                  onChange={this.props.handleChangeCheckbox("transferable")}
+                  onChange={this.props.handleChangeCheckboxStep1(
+                    "transferable"
+                  )}
                   value="transferable"
                 />
               }
@@ -170,7 +172,9 @@ class Step1 extends React.Component {
                 <Checkbox
                   color="primary"
                   checked={withdrawable}
-                  onChange={this.props.handleChangeCheckbox("withdrawable")}
+                  onChange={this.props.handleChangeCheckboxStep1(
+                    "withdrawable"
+                  )}
                   value="withdrawable"
                 />
               }

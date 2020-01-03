@@ -110,7 +110,7 @@ class Step2 extends React.Component {
                 <Checkbox
                   color="primary"
                   checked={issuanceDisapproval}
-                  onChange={this.props.handleChangeCheckbox(
+                  onChange={this.props.handleChangeCheckboxStep2(
                     "issuanceDisapproval"
                   )}
                   value="issuanceDisapproval"
@@ -125,7 +125,7 @@ class Step2 extends React.Component {
           <TextValidator
             fullWidth
             label="Pre-issuance asset signer ID"
-            onChange={this.props.handleChange}
+            onChange={this.props.handleChangeOfValue}
             name="preIssuanceAssetSignerID"
             type="text"
             value={preIssuanceAssetSignerID}
@@ -149,7 +149,7 @@ class Step2 extends React.Component {
         <TextValidator
           fullWidth
           label="Initial pre-issued amount"
-          onChange={this.props.handleChange}
+          onChange={this.props.handleChangeOfValue}
           name="initialPreIssuedAmount"
           type="text"
           value={initialPreIssuedAmount}
