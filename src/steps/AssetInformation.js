@@ -11,6 +11,7 @@ import Select from "@material-ui/core/Select";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import SelectProvider from "./SelectProvider";
 
 const styles = () => ({
   button: {
@@ -133,20 +134,11 @@ class Step1 extends React.Component {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value={"Cash and cash equivalents"}>
-              Cash and cash equivalents
-            </MenuItem>
-            <MenuItem value={"Inventory"}>Inventory</MenuItem>
-            <MenuItem value={"Investments"}>Investments</MenuItem>
-            <MenuItem value={"PPE (Property, Plant, and Equipment)"}>
-              PPE (Property, Plant, and Equipment)
-            </MenuItem>
-            <MenuItem value={"Vehicles"}>Vehicles</MenuItem>
-            <MenuItem value={"Furniture"}>Furniture</MenuItem>
-            <MenuItem value={"Patents (intangible asset)"}>
-              Patents (intangible asset)
-            </MenuItem>
-            <MenuItem value={"Stock"}>Stock</MenuItem>
+            {SelectProvider.map(menuItem => (
+              <MenuItem value={menuItem.value} key={menuItem.id}>
+                {menuItem.value}
+              </MenuItem>
+            ))}
           </Select>
           <FormHelperText style={assetType.length ? { display: "none" } : {}}>
             Type required
