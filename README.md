@@ -1,6 +1,46 @@
 [<img src="https://raw.githubusercontent.com/szympol/two-step-wizard-form/master/twoStepWizard.jpg" align="right" alt="Two Step Wizard Form" width="40%">](https://raw.githubusercontent.com/szympol/two-step-wizard-form/master/twoStepWizard.jpg)
 
+# Two Step Wizard Form
+
+**`[React, Validation, Material UI]`**
+
+This form allows the user to enter a set of requested data fields in a two step wizard. At the end of the user flow, the data should be sent to a REST API accepting JSON documents as the data body of a POST request. As there is no such api, the app simply collects the data and prints the JSON document to the browser js console.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Getting Started
+
+This project requires a server to start working.
+
+- [View project online](https://frosty-colden-f63461.netlify.com/#/)
+
+Please follow instructions below, if you are willing to run the project locally.
+
+### Prerequisites
+
+Both [Git](https://git-scm.com/downloads) and [Node](https://nodejs.org/en/download/) are required to run this project locally.
+
+### Installing
+
+Please copy and paste below commands to your Git terminal step by step to get a development env running.
+
+Download a repository:
+
+```node
+git clone git@github.com:szympol/React_Router_Countries_List.git countriesListReactApp
+```
+
+Go to the project working directory:
+
+```node
+cd countriesListReactApp
+```
+
+Install all of the dependencies with the following command:
+
+```node
+npm install
+```
 
 ## Available Scripts
 
@@ -68,3 +108,15 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+## Built With
+
+- [React](https://reactjs.org/) - a JavaScript library for building user interfaces,
+
+## Author
+
+- **Szymon Polanowski** - [GitHub Account](https://github.com/szympol)
+
+## License
+
+This project is licensed under the MIT License.
