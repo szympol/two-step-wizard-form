@@ -12,7 +12,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This project requires a server to start working.
 
-- [View project online](https://frosty-colden-f63461.netlify.com/#/)
+- [View project online](https://condescending-elion-95b5aa.netlify.com/)
 
 Please follow instructions below, if you are willing to run the project locally.
 
@@ -27,13 +27,13 @@ Please copy and paste below commands to your Git terminal step by step to get a 
 Download a repository:
 
 ```node
-git clone git@github.com:szympol/React_Router_Countries_List.git countriesListReactApp
+git clone git@github.com:szympol/two-step-wizard-form.git twoStepWizardForm
 ```
 
 Go to the project working directory:
 
 ```node
-cd countriesListReactApp
+cd twoStepWizardForm
 ```
 
 Install all of the dependencies with the following command:
@@ -112,6 +112,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 ## Built With
 
 - [React](https://reactjs.org/) - a JavaScript library for building user interfaces,
+- [MATERIAL-UI](https://material-ui.com/) - React components for faster and easier web development. Build your own design system, or start with Material Design,
+- [react-material-ui-form-validator](https://github.com/NewOldMax/react-material-ui-form-validator) - Validation component for material-ui forms 
 
 ## Author
 
