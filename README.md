@@ -1,4 +1,4 @@
-[<img src="https://github.com/szympol/two-step-wizard-form/master/twoStepWizard.jpg?raw=true" align="right" alt="Two Step Wizard Form" width="40%">](https://github.com/szympol/two-step-wizard-form/master/twoStepWizard.jpg)
+[<img src="https://raw.githubusercontent.com/szympol/two-step-wizard-form/master/twoStepWizard.jpg" align="right" alt="Two Step Wizard Form" width="40%">](https://raw.githubusercontent.com/szympol/two-step-wizard-form/master/twoStepWizard.jpg)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
